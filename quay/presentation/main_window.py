@@ -130,6 +130,7 @@ class MainWindow(QWidget):
         outer.addWidget(self.page)
         self._show(self._service.statuses())
         fit.clamp_window(self, 640, 720, 460, 420)
+        self._fit_width(exact=True)  # opens at the width the cards need, not a guess
         self.check()
 
     # --- showing --------------------------------------------------------------------------
@@ -145,6 +146,19 @@ class MainWindow(QWidget):
             self.list.addWidget(card)
         self.list.addStretch()
         self.update_all.setEnabled(any(s.state in (State.UPDATE, State.NOT_INSTALLED) for s in statuses))
+        self._fit_width()
+
+    def _fit_width(self, exact: bool = False):
+        """Wide enough for the widest card and the header, with the page's margins and the scroll bar.
+        Only ever grows the window: a width the user chose is kept."""
+        margins = self.page.root.contentsMargins()
+        cards = max((c.sizeHint().width() for c in self._cards.values()), default=0)
+        header = self.page.header.sizeHint().width()
+        scrollbar = 18
+        needed = max(cards + scrollbar, header) + margins.left() + margins.right()
+        self.setMinimumWidth(needed)
+        if exact or self.width() < needed:
+            self.resize(needed, self.height())
 
     # --- jobs -----------------------------------------------------------------------------
     def _run(self, job, done):

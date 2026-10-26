@@ -2,7 +2,7 @@
 
 Release metadata below is the single source for packaging and the About dialog.
 """
-__version__ = "0.2.0"
+__version__ = "0.2.1"
 
 APP_NAME = "Quay"
 APP_ID = "io.github.quezka.Quay"  # reverse-DNS id used by desktop files and AppStream

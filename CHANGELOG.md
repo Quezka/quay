@@ -2,6 +2,10 @@
 
 All notable changes to Quay. Versions follow [Semantic Versioning](https://semver.org).
 
+## [0.2.1] - 2026-10-27
+
+The window opens wide enough for every app's card and header (and grows if an update makes a line longer), instead of a fixed width. Compact interface from the shared toolkit 0.5.0.
+
 ## [0.2.0] - 2026-10-27
 
 Quay starts when you log in: it checks quietly and opens its window only when an update is waiting. "Start with the computer" turns it off (on by default the first time it runs).

@@ -63,3 +63,22 @@ def test_quiet_start_stays_hidden_without_updates(tmp_path, monkeypatch):
         time.sleep(0.01)
     assert window.isVisible()  # something is waiting, so it opened
     window.close()
+
+
+def test_window_opens_wide_enough_for_every_card(tmp_path, monkeypatch):
+    monkeypatch.setenv("XDG_CONFIG_HOME", str(tmp_path))
+    from quay.presentation.qt_app import create_application
+    from quay.presentation.main_window import MainWindow
+    from PySide6.QtCore import QCoreApplication
+    import time
+    app = create_application(["quay"])
+    window = MainWindow(build_service(demo=True))
+    window.show()
+    end = time.time() + 10
+    while time.time() < end and window._threads:
+        QCoreApplication.processEvents()
+        time.sleep(0.01)
+    widest = max(c.sizeHint().width() for c in window._cards.values())
+    assert window.width() >= widest and window.minimumWidth() >= widest
+    assert all(c.width() >= c.sizeHint().width() for c in window._cards.values())  # nothing squeezed
+    window.close()
