@@ -1,0 +1,44 @@
+"""Translation of Quay's interface (italiano)."""
+
+NAMES: dict[str, list[str]] = {}
+
+PLURALS: dict[str, tuple] = {}
+
+MESSAGES = {
+    'Installed {installed} · {latest} is available': 'Installata {installed} · disponibile la {latest}',
+    'Installed {installed} · up to date': 'Installata {installed} · aggiornata',
+    'Not installed · latest {latest}': 'Non installata · ultima {latest}',
+    'No download for this computer yet': 'Ancora nessun download per questo computer',
+    'Releases page': 'Pagina delle versioni',
+    'Up to date': 'Aggiornata',
+    'Unavailable': 'Non disponibile',
+    'Install': 'Installa',
+    'Update': 'Aggiorna',
+    'Update all': 'Aggiorna tutto',
+    'Open': 'Apri',
+    'Check for updates': 'Cerca aggiornamenti',
+    'Checking…': 'Controllo…',
+    'The suite': 'La suite',
+    'Install and update the apps': 'Installa e aggiorna le app',
+    '{name} is installed.': '{name} è installata.',
+    'There is no installer for this app on this computer yet.': "Per questa app non c'è ancora un programma di installazione per questo computer.",
+    'GitHub is limiting checks right now: try again in an hour.': "GitHub sta limitando i controlli: riprova tra un'ora.",
+    "Can't reach GitHub. Check your internet connection.": 'Impossibile raggiungere GitHub. Controlla la connessione a internet.',
+    "GitHub sent an answer Quay doesn't understand.": 'GitHub ha inviato una risposta che Quay non capisce.',
+    "The download didn't finish. Check your internet connection and try again.": 'Il download non è terminato. Controlla la connessione e riprova.',
+    "The download was damaged (its checksum doesn't match), so it wasn't installed. Try again.": 'Il download era danneggiato (il checksum non corrisponde), quindi non è stato installato. Riprova.',
+    "Can't ask for permission to install (pkexec is missing).": 'Impossibile chiedere il permesso di installare (manca pkexec).',
+    'Installing was cancelled.': 'Installazione annullata.',
+    "Can't find the program to start.": 'Impossibile trovare il programma da avviare.',
+    "Couldn't start the installer.": 'Impossibile avviare il programma di installazione.',
+    "Couldn't start the program.": 'Impossibile avviare il programma.',
+    "This computer isn't supported by Quay yet.": 'Questo computer non è ancora supportato da Quay.',
+    'Notes, day planner and school timetable': 'Appunti, agenda e orario scolastico',
+    'Gantt charts that open and save GanttProject files': 'Diagrammi di Gantt che aprono e salvano file GanttProject',
+    'ER and UML class diagrams, with SQL generation': 'Diagrammi ER e UML delle classi, con generazione di SQL',
+    'ER and UML class diagrams in a comfortable look': 'Diagrammi ER e UML delle classi in un aspetto comodo',
+    'Base camp for CTF study: flashcards, drills and cheatsheets': 'Campo base per studiare CTF: flashcard, esercizi e schede riassuntive',
+    'A light 3D model viewer with precise measuring': 'Un visualizzatore 3D leggero con misure precise',
+    'A calm, private, read-only mail client': 'Un client di posta calmo, privato e in sola lettura',
+    'This launcher: installs and updates the suite': 'Questo launcher: installa e aggiorna la suite',
+}

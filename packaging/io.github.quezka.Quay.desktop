@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=Quay
+GenericName=Suite Launcher
+Comment=Install and update the Quezka suite of apps
+Exec=quay %f
+Icon=io.github.quezka.Quay
+Terminal=false
+Categories=Office;ProjectManagement;Education;
+Keywords=install;update;suite;launcher;quire;

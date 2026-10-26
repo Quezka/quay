@@ -1,0 +1,2 @@
+PySide6>=6.6
+quezka-ui @ git+https://github.com/Quezka/suite-kit@v0.4.0

@@ -1,0 +1,44 @@
+"""Translation of Quay's interface (русский)."""
+
+NAMES: dict[str, list[str]] = {}
+
+PLURALS: dict[str, tuple] = {}
+
+MESSAGES = {
+    'Installed {installed} · {latest} is available': 'Установлено {installed} · доступна {latest}',
+    'Installed {installed} · up to date': 'Установлено {installed} · актуальная версия',
+    'Not installed · latest {latest}': 'Не установлено · последняя {latest}',
+    'No download for this computer yet': 'Для этого компьютера пока нет загрузки',
+    'Releases page': 'Страница релизов',
+    'Up to date': 'Актуально',
+    'Unavailable': 'Недоступно',
+    'Install': 'Установить',
+    'Update': 'Обновить',
+    'Update all': 'Обновить всё',
+    'Open': 'Открыть',
+    'Check for updates': 'Проверить обновления',
+    'Checking…': 'Проверка…',
+    'The suite': 'Набор приложений',
+    'Install and update the apps': 'Установка и обновление приложений',
+    '{name} is installed.': '{name} установлено.',
+    'There is no installer for this app on this computer yet.': 'Для этого приложения на этом компьютере пока нет установщика.',
+    'GitHub is limiting checks right now: try again in an hour.': 'GitHub сейчас ограничивает проверки: попробуйте через час.',
+    "Can't reach GitHub. Check your internet connection.": 'Не удаётся связаться с GitHub. Проверьте подключение к интернету.',
+    "GitHub sent an answer Quay doesn't understand.": 'GitHub прислал ответ, который Quay не понимает.',
+    "The download didn't finish. Check your internet connection and try again.": 'Загрузка не завершилась. Проверьте подключение и повторите.',
+    "The download was damaged (its checksum doesn't match), so it wasn't installed. Try again.": 'Загрузка повреждена (контрольная сумма не совпадает), поэтому установка не выполнена. Повторите.',
+    "Can't ask for permission to install (pkexec is missing).": 'Не удаётся запросить разрешение на установку (нет pkexec).',
+    'Installing was cancelled.': 'Установка отменена.',
+    "Can't find the program to start.": 'Не удаётся найти программу для запуска.',
+    "Couldn't start the installer.": 'Не удалось запустить установщик.',
+    "Couldn't start the program.": 'Не удалось запустить программу.',
+    "This computer isn't supported by Quay yet.": 'Этот компьютер пока не поддерживается Quay.',
+    'Notes, day planner and school timetable': 'Заметки, ежедневник и школьное расписание',
+    'Gantt charts that open and save GanttProject files': 'Диаграммы Ганта, открывающие и сохраняющие файлы GanttProject',
+    'ER and UML class diagrams, with SQL generation': 'ER- и UML-диаграммы классов с генерацией SQL',
+    'ER and UML class diagrams in a comfortable look': 'ER- и UML-диаграммы классов в удобном виде',
+    'Base camp for CTF study: flashcards, drills and cheatsheets': 'Базовый лагерь для CTF: карточки, тренировки и шпаргалки',
+    'A light 3D model viewer with precise measuring': 'Лёгкий просмотрщик 3D-моделей с точными измерениями',
+    'A calm, private, read-only mail client': 'Спокойный приватный почтовый клиент (только чтение)',
+    'This launcher: installs and updates the suite': 'Этот лаунчер: устанавливает и обновляет набор',
+}

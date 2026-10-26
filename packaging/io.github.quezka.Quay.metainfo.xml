@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- AppStream metadata: what Ubuntu App Center / GNOME Software show about Quay. -->
+<component type="desktop-application">
+  <id>io.github.quezka.Quay</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-3.0-or-later</project_license>
+
+  <name>Quay</name>
+  <summary>Installs and updates the Quezka suite of apps</summary>
+  <developer id="io.github.quezka">
+    <name>Quezka</name>
+  </developer>
+
+  <description>
+    <p>
+      Quay lists the apps of the suite (Quire, Gantry, Ligature, Folio, Bivouac, Facet, Missive),
+      shows what is installed and what is new, and installs or updates them from their GitHub releases
+      with one click. Every download is checked against its published checksum.
+    </p>
+  </description>
+
+  <launchable type="desktop-id">io.github.quezka.Quay.desktop</launchable>
+  <provides>
+    <binary>quay</binary>
+  </provides>
+
+  <url type="homepage">https://github.com/Quezka/quay</url>
+  <url type="bugtracker">https://github.com/Quezka/quay/issues</url>
+
+  <categories>
+    <category>System</category>
+    <category>PackageManager</category>
+  </categories>
+  <keywords>
+    <keyword>install</keyword>
+    <keyword>update</keyword>
+    <keyword>launcher</keyword>
+  </keywords>
+
+  <content_rating type="oars-1.1"/>
+
+  <!-- Newest first. Every released version needs an entry. -->
+  <releases>
+    <release version="0.1.0" date="2026-10-26">
+      <description>
+        <p>First release: install, update and open every app of the suite from one window.</p>
+      </description>
+    </release>
+  </releases>
+</component>

@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "quay"
+dynamic = ["version"]
+description = "Installs and updates the Quezka suite of apps"
+readme = "README.md"
+license = "GPL-3.0-or-later"
+license-files = ["LICENSE"]
+requires-python = ">=3.10"
+dependencies = ["PySide6>=6.6", "quezka-ui @ git+https://github.com/Quezka/suite-kit@v0.4.0"]
+
+[project.optional-dependencies]
+build = ["pyinstaller>=6.0"]
+
+[project.gui-scripts]
+quay = "quay.app:main"
+
+[tool.setuptools.dynamic]
+version = {attr = "quay.__version__"}
+
+[tool.setuptools.packages.find]
+include = ["quay*"]
+
+[tool.setuptools.package-data]
+quay = ["assets/*"]
