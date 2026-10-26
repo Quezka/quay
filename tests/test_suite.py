@@ -146,3 +146,37 @@ def test_windows_platform_reads_the_uninstall_entry():
     p = WindowsPlatform(registry=reg)
     assert p.installed_version(app) == "0.36.1"
     assert p.installed_version(CATALOG[1]) is None
+
+
+def test_linux_autostart_writes_and_removes_an_entry(tmp_path):
+    from quay.infrastructure.autostart import LinuxAutostart
+    a = LinuxAutostart(tmp_path)
+    assert not a.enabled()
+    a.set(True)
+    assert a.enabled() and "Exec=quay --autostart" in (tmp_path / "io.github.quezka.Quay.desktop").read_text()
+    a.set(False)
+    assert not a.enabled()
+
+
+def test_windows_autostart_uses_the_run_key():
+    from quay.infrastructure.autostart import WindowsAutostart
+
+    class Reg(FakeRegistry):
+        KEY_SET_VALUE, REG_SZ = 2, 1
+
+        def OpenKey(self, hive, path, *a):
+            return self._Key(self.values.setdefault((hive, path), {}))
+
+        def SetValueEx(self, key, name, _r, _t, value):
+            key[name] = value
+
+        def DeleteValue(self, key, name):
+            del key[name]
+    reg = Reg({})
+    a = WindowsAutostart(registry=reg, command='"Quay.exe" --autostart')
+    reg.QueryValueEx = lambda key, name: (key[name], 1) if name in key else (_ for _ in ()).throw(OSError())
+    assert not a.enabled()
+    a.set(True)
+    assert a.enabled()
+    a.set(False)
+    assert not a.enabled()

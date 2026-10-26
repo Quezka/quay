@@ -5,6 +5,7 @@ NAMES: dict[str, list[str]] = {}
 PLURALS: dict[str, tuple] = {}
 
 MESSAGES = {
+    'Start with the computer': 'Запускать вместе с компьютером',
     'Installed {installed} · {latest} is available': 'Установлено {installed} · доступна {latest}',
     'Installed {installed} · up to date': 'Установлено {installed} · актуальная версия',
     'Not installed · latest {latest}': 'Не установлено · последняя {latest}',

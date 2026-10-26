@@ -4,7 +4,7 @@ from __future__ import annotations
 from PySide6.QtCore import QObject, Qt, QThread, QUrl, Signal, Slot
 from PySide6.QtGui import QDesktopServices
 from PySide6.QtWidgets import (
-    QHBoxLayout, QLabel, QMessageBox, QProgressBar, QPushButton, QVBoxLayout, QWidget,
+    QApplication, QCheckBox, QHBoxLayout, QLabel, QMessageBox, QProgressBar, QPushButton, QVBoxLayout, QWidget,
 )
 from quezka_ui import fit
 
@@ -100,9 +100,10 @@ class AppCard(Card):
 
 
 class MainWindow(QWidget):
-    def __init__(self, service):
+    def __init__(self, service, quiet: bool = False):
         super().__init__()
         self._service = service
+        self._quiet = quiet
         self._threads: list[tuple[QThread, Worker, object]] = []
         self._cards: dict[str, AppCard] = {}
         self.setWindowTitle("Quay")
@@ -119,6 +120,11 @@ class MainWindow(QWidget):
         self.list = QVBoxLayout()
         self.list.setSpacing(10)
         self.page.root.addWidget(scrolling(self.list), 1)
+        self.autostart = QCheckBox(_("Start with the computer"))
+        self.autostart.setVisible(service.autostart_supported())
+        self.autostart.setChecked(service.autostart_enabled())
+        self.autostart.toggled.connect(service.set_autostart)
+        self.page.root.addWidget(self.autostart)
         outer = QVBoxLayout(self)
         outer.setContentsMargins(0, 0, 0, 0)
         outer.addWidget(self.page)
@@ -171,10 +177,26 @@ class MainWindow(QWidget):
         self.refresh_button.setEnabled(True)
         if error:
             self.message.setText(_(error))
+            self._after_quiet_check_failed()
             return
         self.message.setText("")
         self._service.remember(releases)
         self._show(self._service.statuses())
+        self._after_quiet_check()
+
+    def _after_quiet_check_failed(self):
+        if self._quiet:  # offline at login: nothing to say
+            QApplication.quit()
+
+    def _after_quiet_check(self):
+        """Started at login: stay out of the way unless something is waiting."""
+        if not self._quiet:
+            return
+        self._quiet = False
+        if self._service.has_updates():
+            self.show()
+        else:
+            QApplication.quit()
 
     def install(self, key: str, card: AppCard | None = None, then=None):
         card = card or self._cards.get(key)

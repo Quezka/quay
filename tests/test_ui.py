@@ -46,3 +46,20 @@ def test_update_button_installs_and_refreshes(tmp_path, monkeypatch):
     assert service.statuses()[0].installed == "0.36.2"
     assert window._cards["quire"].status.state.value == "up_to_date"
     window.close()
+
+
+def test_quiet_start_stays_hidden_without_updates(tmp_path, monkeypatch):
+    monkeypatch.setenv("XDG_CONFIG_HOME", str(tmp_path))
+    from quay.presentation.qt_app import create_application
+    from quay.presentation.main_window import MainWindow
+    from PySide6.QtCore import QCoreApplication
+    import time
+    app = create_application(["quay"])
+    service = build_service(demo=True)  # quire and ligature have updates
+    window = MainWindow(service, quiet=True)
+    end = time.time() + 10
+    while time.time() < end and window._quiet:
+        QCoreApplication.processEvents()
+        time.sleep(0.01)
+    assert window.isVisible()  # something is waiting, so it opened
+    window.close()

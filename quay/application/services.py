@@ -8,7 +8,7 @@ from typing import Callable
 from ..domain.catalog import CATALOG, SuiteApp, by_key
 from ..domain.versions import is_newer
 from .errors import QuayError
-from .ports import Platform, Release, ReleaseFeed
+from .ports import Autostart, Platform, Release, ReleaseFeed
 
 
 class State(enum.Enum):
@@ -28,7 +28,9 @@ class AppStatus:
 
 
 class SuiteService:
-    def __init__(self, feed: ReleaseFeed, platform: Platform, catalog: tuple[SuiteApp, ...] = CATALOG):
+    def __init__(self, feed: ReleaseFeed, platform: Platform, catalog: tuple[SuiteApp, ...] = CATALOG,
+                 autostart: Autostart | None = None):
+        self._autostart = autostart
         self._feed = feed
         self._platform = platform
         self._catalog = catalog
@@ -80,3 +82,16 @@ class SuiteService:
 
     def launch(self, key: str):
         self._platform.launch(by_key(key))
+
+    def autostart_supported(self) -> bool:
+        return self._autostart is not None
+
+    def autostart_enabled(self) -> bool:
+        return bool(self._autostart and self._autostart.enabled())
+
+    def set_autostart(self, enabled: bool):
+        if self._autostart:
+            self._autostart.set(enabled)
+
+    def has_updates(self) -> bool:
+        return any(s.state is State.UPDATE for s in self.statuses())
