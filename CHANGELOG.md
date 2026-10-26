@@ -2,6 +2,10 @@
 
 All notable changes to Quay. Versions follow [Semantic Versioning](https://semver.org).
 
+## [0.2.2] - 2026-10-27
+
+Fixed: the window froze while an app was being installed or updated (the install ran on the window's own thread). It now runs in the background and the card shows it is busy.
+
 ## [0.2.1] - 2026-10-27
 
 The window opens wide enough for every app's card and header (and grows if an update makes a line longer), instead of a fixed width. Compact interface from the shared toolkit 0.5.0.

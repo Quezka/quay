@@ -94,6 +94,10 @@ class AppCard(Card):
         if on:
             self.progress.setRange(0, 0)
 
+    def set_installing(self):
+        self.progress.setRange(0, 0)  # no percentage while apt works: just "busy"
+        self.progress.show()
+
     def set_progress(self, done: int, total: int):
         self.progress.setRange(0, max(total, 1))
         self.progress.setValue(done)
@@ -225,18 +229,23 @@ class MainWindow(QWidget):
         return self._service.prepare(key, progress)
 
     def _downloaded(self, key, card, path, error, then):
-        if not error:
-            try:  # on the UI thread: it asks for the password and may start another process
-                self._service.install(key, path)
-            except QuayError as e:
-                error = str(e)
+        if error:
+            return self._installed(key, card, None, error, then)
+        # The install itself (apt, the password dialog, the setup) can take a minute: off the UI thread too.
+        if card:
+            card.set_installing()
+        self.message.setText(_("Installing…"))
+        self._run(lambda progress: self._service.install(key, path),
+                  lambda result, err: self._installed(key, card, result, err, then))
+
+    def _installed(self, key, card, _result, error, then):
         if card:
             card.busy(False)
         if error:
             self.message.setText(_(error))
         else:
-            self.message.setText(_("{name} is installed.").format(name=self._cards[key].status.app.name)
-                                 if key in self._cards else "")
+            name = self._cards[key].status.app.name if key in self._cards else ""
+            self.message.setText(_("{name} is installed.").format(name=name))
             self._show(self._service.statuses())
         if then:
             then()

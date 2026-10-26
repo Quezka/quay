@@ -82,3 +82,41 @@ def test_window_opens_wide_enough_for_every_card(tmp_path, monkeypatch):
     assert window.width() >= widest and window.minimumWidth() >= widest
     assert all(c.width() >= c.sizeHint().width() for c in window._cards.values())  # nothing squeezed
     window.close()
+
+
+def test_installing_does_not_block_the_window(tmp_path, monkeypatch):
+    """The install (apt, the password dialog) takes a while: the event loop must keep running meanwhile."""
+    monkeypatch.setenv("XDG_CONFIG_HOME", str(tmp_path))
+    import threading
+    import time
+    from PySide6.QtCore import QCoreApplication
+    from quay.presentation.qt_app import create_application
+    from quay.presentation.main_window import MainWindow
+    app = create_application(["quay"])
+    service = build_service(demo=True)
+    ui_thread = threading.get_ident()
+    seen = {}
+    original = service._platform.install
+
+    def slow_install(app_, path):
+        seen["thread"] = threading.get_ident()
+        time.sleep(0.4)
+        original(app_, path)
+    service._platform.install = slow_install
+    window = MainWindow(service)
+    end = time.time() + 10
+    while time.time() < end and window._threads:
+        QCoreApplication.processEvents()
+        time.sleep(0.01)
+    window._cards["quire"].action.click()
+    ticks = 0
+    end = time.time() + 10
+    while time.time() < end:
+        QCoreApplication.processEvents()
+        ticks += 1
+        time.sleep(0.01)
+        if "thread" in seen and not window._threads:
+            break
+    assert seen["thread"] != ui_thread  # installed off the UI thread
+    assert service.statuses()[0].installed == "0.36.2"
+    window.close()
