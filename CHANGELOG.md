@@ -2,6 +2,10 @@
 
 All notable changes to Quay. Versions follow [Semantic Versioning](https://semver.org).
 
+## [0.2.3] - 2026-10-27
+
+Fixed: the compact text size now reaches labels, buttons, menus and lists too (the desktop theme was keeping them at the system's larger size), so the whole interface really is smaller.
+
 ## [0.2.2] - 2026-10-27
 
 Fixed: the window froze while an app was being installed or updated (the install ran on the window's own thread). It now runs in the background and the card shows it is busy.
