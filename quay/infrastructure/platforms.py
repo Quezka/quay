@@ -38,8 +38,8 @@ class DebPlatform:
         return version.strip() or None
 
     def pick(self, assets: tuple[ReleaseAsset, ...]) -> ReleaseAsset | None:
-        suffix = f"_{deb_architecture()}.deb"
-        return next((a for a in assets if a.name.endswith(suffix)), None)
+        suffixes = (f"_{deb_architecture()}.deb", "_all.deb")  # Natter's is the same on every machine
+        return next((a for a in assets if a.name.endswith(suffixes)), None)
 
     def install(self, app: SuiteApp, path: str) -> None:
         # pkexec shows the system's password dialog; apt checks the package and upgrades it.

@@ -16,7 +16,7 @@ def test_window_lists_every_app_and_updates(tmp_path, monkeypatch):
         QCoreApplication.processEvents()
         if not window._threads:
             break
-    assert set(window._cards) == {"quire", "gantry", "ligature", "folio", "bivouac", "facet", "missive", "quay"}
+    assert set(window._cards) == {"quire", "gantry", "ligature", "folio", "bivouac", "facet", "missive", "stagno", "natter", "quay"}
     assert window._cards["quire"].status.state.value == "update"
     assert window._cards["missive"].status.state.value == "unavailable"
     window.close()

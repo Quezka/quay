@@ -5,6 +5,7 @@ NAMES: dict[str, list[str]] = {}
 PLURALS: dict[str, tuple] = {}
 
 MESSAGES = {
+    'Updates waiting: {n}': 'Ожидают обновления: {n}',
     'Installing…': 'Установка…',
     'Start with the computer': 'Запускать вместе с компьютером',
     'Installed {installed} · {latest} is available': 'Установлено {installed} · доступна {latest}',
@@ -43,4 +44,13 @@ MESSAGES = {
     'A light 3D model viewer with precise measuring': 'Лёгкий просмотрщик 3D-моделей с точными измерениями',
     'A calm, private, read-only mail client': 'Спокойный приватный почтовый клиент (только чтение)',
     'This launcher: installs and updates the suite': 'Этот лаунчер: устанавливает и обновляет набор',
+    'The DuckNet browser': 'Браузер DuckNet',
+    'WhatsApp Web in a light window of its own': 'WhatsApp Web в отдельном лёгком окне',
+    'Databases made easy: tables, forms and reports, and Access files': 'Простые базы данных: таблицы, формы, отчёты и файлы Access',
+    "What's new": 'Что нового',
+    'Update all ({n})': 'Обновить всё ({n})',
+    '{name}: {error}': '{name}: {error}',
+    'Updating {done} of {total}…': 'Обновляю {done} из {total}…',
+    'Not updated: {names}.': 'Не обновлены: {names}.',
+    'All up to date.': 'Всё обновлено.',
 }

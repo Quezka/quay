@@ -93,5 +93,10 @@ class SuiteService:
         if self._autostart:
             self._autostart.set(enabled)
 
+    def pending_updates(self) -> list[str]:
+        """The apps with something new, Quay itself last: updating it may close it."""
+        keys = [s.app.key for s in self.statuses() if s.state is State.UPDATE]
+        return sorted(keys, key=lambda key: key == "quay")
+
     def has_updates(self) -> bool:
         return any(s.state is State.UPDATE for s in self.statuses())

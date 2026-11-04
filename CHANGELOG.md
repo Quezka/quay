@@ -2,6 +2,17 @@
 
 All notable changes to Quay. Versions follow [Semantic Versioning](https://semver.org).
 
+## [0.3.0] - 2026-11-04
+
+### Added
+- Stagno and Natter are in the list.
+- Each app has its symbol; what needs an update comes first, with a "What's new" button, and the header says how many are waiting.
+- Material 3, the Manrope typeface and Material icons, like the rest of the suite.
+
+### Fixed
+- "Update all" also installed every app you had never installed. It now updates only what you have, and says how far along it is. One that fails no longer hides the others: it's named at the end.
+- Folio was described as a diagram editor.
+
 ## [0.2.3] - 2026-10-27
 
 Fixed: the compact text size now reaches labels, buttons, menus and lists too (the desktop theme was keeping them at the system's larger size), so the whole interface really is smaller.

@@ -5,6 +5,7 @@ NAMES: dict[str, list[str]] = {}
 PLURALS: dict[str, tuple] = {}
 
 MESSAGES = {
+    'Updates waiting: {n}': 'Aggiornamenti in attesa: {n}',
     'Installing…': 'Installazione…',
     'Start with the computer': 'Avvia con il computer',
     'Installed {installed} · {latest} is available': 'Installata {installed} · disponibile la {latest}',
@@ -43,4 +44,13 @@ MESSAGES = {
     'A light 3D model viewer with precise measuring': 'Un visualizzatore 3D leggero con misure precise',
     'A calm, private, read-only mail client': 'Un client di posta calmo, privato e in sola lettura',
     'This launcher: installs and updates the suite': 'Questo launcher: installa e aggiorna la suite',
+    'The DuckNet browser': 'Il browser di DuckNet',
+    'WhatsApp Web in a light window of its own': 'WhatsApp Web in una finestra leggera tutta sua',
+    'Databases made easy: tables, forms and reports, and Access files': 'Database semplici: tabelle, maschere e report, e file Access',
+    "What's new": 'Novità',
+    'Update all ({n})': 'Aggiorna tutto ({n})',
+    '{name}: {error}': '{name}: {error}',
+    'Updating {done} of {total}…': 'Aggiorno {done} di {total}…',
+    'Not updated: {names}.': 'Non aggiornate: {names}.',
+    'All up to date.': 'Tutto aggiornato.',
 }

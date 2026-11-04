@@ -6,12 +6,37 @@ from PySide6.QtGui import QDesktopServices
 from PySide6.QtWidgets import (
     QApplication, QCheckBox, QHBoxLayout, QLabel, QMessageBox, QProgressBar, QPushButton, QVBoxLayout, QWidget,
 )
-from quezka_ui import fit
+from quezka_ui import fit, icons
 
 from ..application.errors import QuayError
 from ..application.services import AppStatus, State
+from . import theme
 from .i18n import _
 from .widgets import Card, Page, button, label, primary_button, scrolling
+
+ICONS = {"quire": "notes", "gantry": "gantt", "ligature": "diagram", "folio": "database", "bivouac": "terminal",
+         "facet": "cube", "missive": "mail", "stagno": "drop", "natter": "users", "quay": "download"}
+TILE = 44
+
+
+def _rank(status: AppStatus) -> int:
+    """What needs you comes first: updates, then what's installed, then the rest."""
+    return 0 if status.state is State.UPDATE else 1 if status.installed else 2
+
+
+class AppTile(QLabel):
+    """The app's symbol on a soft tile, in the theme's colours."""
+
+    def __init__(self, key: str):
+        super().__init__()
+        self.setFixedSize(TILE, TILE)
+        self.setAlignment(Qt.AlignCenter)
+        name = ICONS.get(key, "download")
+        theme.themed(lambda t: self._paint(name, t))
+
+    def _paint(self, name, t):
+        self.setStyleSheet(f"background: {t.accent_soft}; border-radius: 14px;")
+        self.setPixmap(icons.pixmap(name, t.accent, 24))
 
 
 class Worker(QObject):
@@ -40,6 +65,7 @@ class AppCard(Card):
         self._window = window
         row = QHBoxLayout()
         row.setSpacing(12)
+        row.addWidget(AppTile(status.app.key), 0, Qt.AlignVCenter)
         texts = QVBoxLayout()
         texts.setSpacing(2)
         texts.addWidget(QLabel(status.app.name, objectName="cardTitle"))
@@ -52,6 +78,10 @@ class AppCard(Card):
         self.progress.setTextVisible(False)
         self.progress.hide()
         row.addWidget(self.progress, 0, Qt.AlignVCenter)
+        if status.state is State.UPDATE and status.page_url:
+            self.news = button(_("What's new"))
+            self.news.clicked.connect(lambda: QDesktopServices.openUrl(QUrl(status.page_url)))
+            row.addWidget(self.news, 0, Qt.AlignVCenter)
         self.action = self._action(status)
         row.addWidget(self.action, 0, Qt.AlignVCenter)
         self.open_button = None
@@ -73,7 +103,7 @@ class AppCard(Card):
 
     def _action(self, s: AppStatus) -> QPushButton:
         if s.state is State.NOT_INSTALLED:
-            b = primary_button(_("Install"), "download")
+            b = button(_("Install"), "download")  # the filled button is for what's waiting: updates
         elif s.state is State.UPDATE:
             b = primary_button(_("Update"), "refresh")
         else:
@@ -109,6 +139,7 @@ class MainWindow(QWidget):
         self._service = service
         self._quiet = quiet
         self._threads: list[tuple[QThread, Worker, object]] = []
+        self.failed: list[str] = []
         self._cards: dict[str, AppCard] = {}
         self.setWindowTitle("Quay")
         self.page = Page()
@@ -144,12 +175,16 @@ class MainWindow(QWidget):
             if item.widget():
                 item.widget().deleteLater()
         self._cards = {}
-        for status in statuses:
+        for status in sorted(statuses, key=_rank):
             card = AppCard(status, self)
             self._cards[status.app.key] = card
             self.list.addWidget(card)
         self.list.addStretch()
-        self.update_all.setEnabled(any(s.state in (State.UPDATE, State.NOT_INSTALLED) for s in statuses))
+        waiting = sum(s.state is State.UPDATE for s in statuses)
+        self.update_all.setEnabled(bool(waiting))
+        self.update_all.setText(_("Update all ({n})").format(n=waiting) if waiting else _("Update all"))
+        self.page.subtitle.setText(_("Install and update the apps") if not waiting else
+                                   _("Updates waiting: {n}").format(n=waiting))
         self._fit_width()
 
     def _fit_width(self, exact: bool = False):
@@ -241,22 +276,32 @@ class MainWindow(QWidget):
     def _installed(self, key, card, _result, error, then):
         if card:
             card.busy(False)
+        name = self._cards[key].status.app.name if key in self._cards else ""
         if error:
-            self.message.setText(_(error))
+            self.message.setText(_("{name}: {error}").format(name=name, error=_(error)))
+            self.failed.append(name)
         else:
-            name = self._cards[key].status.app.name if key in self._cards else ""
             self.message.setText(_("{name} is installed.").format(name=name))
             self._show(self._service.statuses())
         if then:
             then()
 
     def install_all(self):
-        pending = [s.app.key for s in self._service.statuses()
-                   if s.state in (State.UPDATE, State.NOT_INSTALLED)]
+        """Every update, one after the other; one that fails doesn't stop the rest, and it's named at the end."""
+        pending = self._service.pending_updates()
+        total = len(pending)
+        self.failed = []
+        self.update_all.setEnabled(False)
 
         def step():
             if pending:
+                self.message.setText(_("Updating {done} of {total}…").format(done=total - len(pending) + 1, total=total))
                 self.install(pending.pop(0), then=step)
+            elif self.failed:
+                self.message.setText(_("Not updated: {names}.").format(names=", ".join(self.failed)))
+                self._show(self._service.statuses())
+            elif total:
+                self.message.setText(_("All up to date."))
         step()
 
     def open_app(self, key: str):

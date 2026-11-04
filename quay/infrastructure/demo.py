@@ -7,7 +7,7 @@ from ..application.ports import Release, ReleaseAsset
 from ..domain.catalog import SuiteApp
 
 LATEST = {"quire": "0.36.2", "gantry": "0.6.2", "ligature": "0.10.2", "folio": "0.3.3", "bivouac": "0.7.2",
-          "facet": "0.1.10", "quay": "0.1.0"}  # missive has no release yet
+          "facet": "0.1.10", "quay": "0.1.0"}  # missive has no release here, to show how that looks
 INSTALLED = {"quire": "0.36.1", "gantry": "0.6.2", "ligature": "0.10.0", "quay": "0.1.0"}
 
 

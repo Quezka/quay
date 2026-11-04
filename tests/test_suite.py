@@ -180,3 +180,30 @@ def test_windows_autostart_uses_the_run_key():
     assert a.enabled()
     a.set(False)
     assert not a.enabled()
+
+
+def test_update_all_means_what_you_have_with_quay_last():
+    class Feed:
+        def latest(self, repo):
+            return Release("9.0.0", "http://page", (ReleaseAsset("x.deb", "http://x", 1),))
+
+    class Platform:
+        def installed_version(self, app):
+            return {"quay": "1.0.0", "quire": "1.0.0", "folio": "9.0.0"}.get(app.key)
+
+        def pick(self, assets):
+            return assets[0]
+
+    service = SuiteService(Feed(), Platform())
+    service.remember(service.fetch())
+    assert service.pending_updates() == ["quire", "quay"]  # not the ones you never installed
+
+
+def test_the_catalogue_has_stagno_and_natter():
+    keys = {a.key for a in CATALOG}
+    assert {"stagno", "natter"} <= keys
+
+
+def test_natters_package_fits_every_machine():
+    assets = (ReleaseAsset("Natter-1-windows-x64-setup.exe", "u", 1), ReleaseAsset("natter_1_all.deb", "u", 1))
+    assert DebPlatform().pick(assets).name == "natter_1_all.deb"
