@@ -2,6 +2,16 @@
 
 All notable changes to Quay. Versions follow [Semantic Versioning](https://semver.org).
 
+## [0.4.0] - 2026-11-09
+
+### Changed
+- **Rewritten in Rust** on the suite's new toolkit (egui + wgpu, real glass), like the coming versions of every
+  app: one small program instead of a bundled Python and Qt. It starts faster and draws smoothly.
+- **Each app shows its real icon**, the same one its own package installs, instead of a generic symbol.
+- "What's new" is a link under the app's version, so the buttons line up.
+- Downloads still have their size and checksum checked; installing still asks for your password once (Linux) or
+  runs the app's own setup (Windows).
+
 ## [0.3.0] - 2026-11-04
 
 ### Added

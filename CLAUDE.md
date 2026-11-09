@@ -1,12 +1,13 @@
 # Quay
 
-Python 3.10+ / PySide6 launcher for the Quezka suite (Linux + Windows). Same layers, toolkit (`quezka-ui`) and release
-process as Quire: `domain` → `application` → `infrastructure` + `presentation`, enforced by `tests/test_architecture.py`.
+The Quezka suite's launcher (Linux + Windows). Since 0.4.0 its code is Rust, in the suite-rs repository
+(`crates/quay`, on the shared kit; see suite-rs's CLAUDE.md). This repo holds the packaging and releases.
 
-- Run: `.venv/bin/quay --demo`. Test: `.venv/bin/python -m pytest -q`.
-- The catalogue is `domain/catalog.py`. A new app needs its repo, its deb/command name and its Inno `AppId`
-  (the Windows uninstall key is `{AppId}_is1`); every AppId must be unique (a test checks).
-- Network work (`SuiteService.fetch`/`prepare`) and installing (`install`: apt, password dialog) run on worker threads; never block the UI thread.
-- Release asset names must stay `<name>_<v>_<arch>.deb` and `<Name>-<v>-windows-x64-setup.exe`.
-- UI text goes through `_()` with Russian and Italian in `presentation/locales`.
-- Commit as arsdom15@gmail.com; release by bumping `__version__`, CHANGELOG, metainfo, tag `vX.Y.Z`.
+- `suite-rs.ref` names the suite-rs commit CI builds. To release: change the crate there (bump `version` in
+  `crates/quay/Cargo.toml`), push suite-rs, put its commit here, add a CHANGELOG section and a metainfo
+  `<release>`, commit, tag `vX.Y.Z` (must equal the crate's version) and push.
+- CI (`.github/workflows/build.yml`): tests and builds the crate, `scripts/build_deb.sh` makes the .deb,
+  `packaging/quay.iss` the Windows setup (icon from `quay --write-icon`).
+- Release asset names must stay `quay_<v>_<arch>.deb` and `Quay-<v>-windows-x64-setup.exe` (Quay updates itself).
+- The Inno `AppId` never changes. Commit as arsdom15@gmail.com.
+- The Python version (0.3.0 and older) is in git history.

@@ -1,6 +1,6 @@
-; Windows installer for Quay (Inno Setup 6). Built by `python scripts/build.py --installer`,
-; which passes AppVersion, Publisher, Homepage, SourceDir (the PyInstaller folder build),
-; IconFile and OutputDir with /D.
+; Windows installer for Quay (Inno Setup 6). Built by CI (.github/workflows/build.yml), which passes
+; AppVersion, Publisher, Homepage, SourceDir (the folder with Quay.exe, the Rust build), IconFile and
+; OutputDir with /D.
 ;
 ; Installs for the current user by default (no admin prompt); the wizard offers
 ; "install for all users" too. Your settings live in AppData, so upgrading
@@ -54,7 +54,7 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 Source: "{#SourceDir}\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 
 [InstallDelete]
-; Drop files from the previous version's folder build before copying the new one.
+; The Python versions (0.3 and older) were a folder build: drop it, Quay is one program now.
 Type: filesandordirs; Name: "{app}\_internal"
 
 [Registry]
