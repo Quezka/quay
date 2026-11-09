@@ -2,6 +2,10 @@
 
 All notable changes to Quay. Versions follow [Semantic Versioning](https://semver.org).
 
+## [0.4.1] - 2026-11-09
+
+- The first release of the Rust Quay (0.4.0's Windows setup didn't build, so 0.4.0 was never published).
+
 ## [0.4.0] - 2026-11-09
 
 ### Changed

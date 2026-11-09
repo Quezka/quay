@@ -60,6 +60,10 @@ jobs:
           }
       - name: Make the setup
         shell: bash
+        env:
+          # Git Bash would turn ISCC's /D... switches into paths.
+          MSYS_NO_PATHCONV: "1"
+          MSYS2_ARG_CONV_EXCL: "*"
         run: |
           version=$(grep -m1 '^version' suite-rs/crates/quay/Cargo.toml | cut -d'"' -f2)
           mkdir -p app dist
