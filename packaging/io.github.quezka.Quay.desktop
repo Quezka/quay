@@ -8,3 +8,4 @@ Icon=io.github.quezka.Quay
 Terminal=false
 Categories=Office;ProjectManagement;Education;
 Keywords=install;update;suite;launcher;quire;
+StartupWMClass=io.github.quezka.Quay

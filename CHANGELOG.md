@@ -2,6 +2,12 @@
 
 All notable changes to Quay. Versions follow [Semantic Versioning](https://semver.org).
 
+## [0.4.2] - 2026-11-14
+
+- **Started at login, Quay stays out of sight**: it checks for updates without a window and opens one only when there
+  is something to install. It never starts filling the screen: the first window is smaller than a small screen.
+- **Its own icon in the dock**, instead of an unknown app (the window now carries Quay's app id and icon).
+
 ## [0.4.1] - 2026-11-09
 
 - The first release of the Rust Quay (0.4.0's Windows setup didn't build, so 0.4.0 was never published).
