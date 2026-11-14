@@ -41,6 +41,11 @@
 
   <!-- Newest first. Every released version needs an entry. -->
   <releases>
+    <release version="0.6.0" date="2026-11-14">
+      <description>
+        <p>Loupe and Tether join the list.</p>
+      </description>
+    </release>
     <release version="0.5.0" date="2026-11-14">
       <description>
         <p>The suite's new Material 3 tonal look, without glass.</p>

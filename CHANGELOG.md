@@ -2,6 +2,10 @@
 
 All notable changes to Quay. Versions follow [Semantic Versioning](https://semver.org).
 
+## [0.6.0] - 2026-11-14
+
+- Two new apps in the list (Linux): **Loupe** (a laptop's camera on another computer, and the laptop as a second screen) and **Tether** (your phone on the computer).
+
 ## [0.5.0] - 2026-11-14
 
 - The suite's new **Material 3 tonal** look: soft tonal background, white cards with big round corners, darker text, no glass.
