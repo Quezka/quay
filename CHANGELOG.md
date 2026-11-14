@@ -2,6 +2,10 @@
 
 All notable changes to Quay. Versions follow [Semantic Versioning](https://semver.org).
 
+## [0.5.0] - 2026-11-14
+
+- The suite's new **Material 3 tonal** look: soft tonal background, white cards with big round corners, darker text, no glass.
+
 ## [0.4.2] - 2026-11-14
 
 - **Started at login, Quay stays out of sight**: it checks for updates without a window and opens one only when there
