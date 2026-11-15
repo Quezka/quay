@@ -2,6 +2,12 @@
 
 All notable changes to Quay. Versions follow [Semantic Versioning](https://semver.org).
 
+## [0.7.0] - 2026-11-15
+
+- **Filter the list**: All, Updates, Installed, Not installed, each with how many apps it holds.
+- **Fits any window**: two columns of apps on a wide screen; on a narrow one the buttons go under each app's text, and the header keeps only the button that matters now.
+- **The suite's new look**: solid header instead of glass, and every app's **new icon**, all drawn the same way.
+
 ## [0.6.0] - 2026-11-14
 
 - Two new apps in the list (Linux): **Loupe** (a laptop's camera on another computer, and the laptop as a second screen) and **Tether** (your phone on the computer).
