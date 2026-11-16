@@ -2,6 +2,12 @@
 
 All notable changes to Quay. Versions follow [Semantic Versioning](https://semver.org).
 
+## [0.8.0] - 2026-11-16
+
+- **Starts at a size that fits** a 1366×768 laptop, leaving room for the top bar and title bar.
+- **Trackpad glide**: a two-finger flick keeps scrolling after your fingers lift.
+- **Smaller window, slightly smaller text**, so half a screen (split screen) stays readable.
+
 ## [0.7.0] - 2026-11-15
 
 - **Filter the list**: All, Updates, Installed, Not installed, each with how many apps it holds.
