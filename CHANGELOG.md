@@ -2,6 +2,10 @@
 
 All notable changes to Quay. Versions follow [Semantic Versioning](https://semver.org).
 
+## [0.9.0] - 2026-11-16
+
+- **Tidings** joins the list: your own news reader.
+
 ## [0.8.0] - 2026-11-16
 
 - **Starts at a size that fits** a 1366×768 laptop, leaving room for the top bar and title bar.
